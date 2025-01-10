@@ -1,5 +1,5 @@
 FROM mariadb:latest
 
 RUN apt-get update && \
-    apt-get install -y mariadb-client && \
+    apt-get install -y mariadb-client net-tools iputils-ping && \
     rm -rf /var/lib/apt/lists/*
