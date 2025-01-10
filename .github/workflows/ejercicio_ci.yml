@@ -46,3 +46,27 @@ jobs:
         MARIADB_PASSWORD: uvlhub_password
       run: |
         pytest app/modules/ --ignore-glob='*selenium*'
+
+  outdated_dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.11'
+
+    - name: Prepare environment
+      run: |
+        sed -i '/rosemary @ file:\/\/\/app/d' requirements.txt
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: List outdated dependencies
+      run: |
+        pip list --outdated
+    
